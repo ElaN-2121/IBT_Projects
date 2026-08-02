@@ -73,3 +73,109 @@ body {
   flex: 1;
   padding: 40px;
 }
+/* === VulnPrioritizer Layout === */
+.vuln-prioritizer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.vuln-prioritizer h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent-amber);
+  margin: 0;
+}
+
+/* === Form Styles === */
+.vuln-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  background: var(--bg-surface);
+  padding: 24px;
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+}
+
+.vuln-form input {
+  background: var(--bg-ink);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 10px;
+  color: var(--text-active);
+  font-size: 14px;
+}
+
+.vuln-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.vuln-form button {
+  grid-column: 1 / -1;
+  padding: 12px;
+  background: var(--accent-amber);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--bg-ink);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.vuln-form button:hover {
+  background: #cf8d2f; /* slightly darker amber */
+}
+
+/* === Table Styles === */
+.vuln-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vuln-table th,
+.vuln-table td {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.vuln-table th {
+  background: var(--bg-ink);
+  color: var(--text-muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.vuln-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.vuln-table tr:hover {
+  background: rgba(232, 163, 61, 0.08);
+}
+
+.vuln-table td {
+  color: var(--text-active);
+}
+
+/* === Risk Score Highlighting === */
+.vuln-table td:last-child {
+  font-weight: 600;
+}
+
+.vuln-table td:last-child.high {
+  color: #ff4d4d; /* red for high risk */
+}
+
+.vuln-table td:last-child.medium {
+  color: #e8a33d; /* amber for medium */
+}
+
+.vuln-table td:last-child.low {
+  color: #4caf50; /* green for low */
+}
