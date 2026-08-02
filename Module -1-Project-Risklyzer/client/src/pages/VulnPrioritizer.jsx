@@ -1,7 +1,10 @@
 import React, {useState, useEffect } from "react";
 import { getVulnerabilities, createVulnerability} from "../utils/api"
+import { useNavigate } from "react-router-dom";
 
 function VulnPrioritizer(){
+  const navigate = useNavigate();
+
   const [vulns, setVulns] = useState([]);
   const [formData, setFormData] = useState({
     name:"",
@@ -74,7 +77,7 @@ function VulnPrioritizer(){
         </thead>
         <tbody>
           {vulns.map(v => (
-            <tr key={v._id}>
+            <tr key={v._id} onClick={() => navigate(`/vulns/${v._id}`)} style={{ cursor: "pointer" }}>
               <td>{v.name}</td>
               <td>{v.cveId}</td>
               <td>{v.cvssScore}</td>

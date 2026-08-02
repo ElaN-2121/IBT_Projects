@@ -32,3 +32,8 @@ export async function deleteVulnerability(id) {
   if (!res.ok) throw new Error("Failed to delete vulnerability");
   return res.json();
 }
+export async function getVulnerabilityById(id) {
+  const res = await fetch(`${API_BASE}/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch vulnerability");
+  return res.json();
+}

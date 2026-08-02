@@ -6,6 +6,7 @@ import PhishingScorer from './pages/PhishingScorer';
 import AttributionEngine from './pages/AttributionEngine';
 import Login from './pages/Login';
 import Sidebar from './components/layout/Sidebar';
+import VulnDetail from './pages/VulnDetail';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<VulnPrioritizer/>}></Route>
                 <Route path="/vulns" element={<VulnPrioritizer/>}></Route>
+                <Route path="/vulns/:id" element={<VulnDetail/>}></Route>
                 <Route path="/killchain" element={<KillChainMapper/>}></Route>
                 <Route path="/phishing" element={<PhishingScorer/>}></Route>
                 <Route path="/attribution" element={<AttributionEngine/>}></Route>
