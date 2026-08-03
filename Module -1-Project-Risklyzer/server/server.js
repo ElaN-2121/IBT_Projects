@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 
 const authRoutes = require('./routes/authRoute');
 const vulnRoutes = require('./routes/vulnRoute');
+const incidentRoutes = require("./routes/incidentRoute");
+
 const app = express();
 const PORT = process.env.PORT || 5000
 
@@ -15,6 +17,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/vulns", vulnRoutes);
+app.use("/api/incidents", incidentRoutes);
 
 const startServer = async () => {
   await connectDB();

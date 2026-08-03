@@ -11,4 +11,4 @@ router.get("/me", requireAuth, (req, res) => {
   res.json({ userId: req.userID });
 });
 
-module.exports = router
+module.exports = router;
