@@ -4,13 +4,15 @@ const {
     getPhishingById,
     deletePhishingCase
 }  = require("../controllers/phishingController");
+const requireAuth  = require("../middleware/authMiddleware");
+
 
 const express = require("express");
 const router = express.Router()
 
-router.get("/", getPhishing);
-router.get("/:id", getPhishingById);
-router.post("/", createPhishing );
-router.delete("/:id", deletePhishingCase)
+router.get("/", requireAuth, getPhishing);
+router.get("/:id", requireAuth, getPhishingById);
+router.post("/",  requireAuth, createPhishing );
+router.delete("/:id", requireAuth, deletePhishingCase)
 
 module.exports = router;

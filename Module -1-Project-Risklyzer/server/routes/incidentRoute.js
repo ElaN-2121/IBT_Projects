@@ -9,12 +9,14 @@ const {createIncident,
   updateEventIncident,
   deleteEventFromIncident
 } = require("../controllers/killChainController");
+const requireAuth  = require("../middleware/authMiddleware");
 
-router.post("/", createIncident);
-router.get("/", getIncidents);
-router.get("/:id", getIncidentById);
-router.post("/:id/events", addEventToIncident);
-router.delete("/:id", deleteIncident);
-router.patch("/:incidentId/events/:eventId", updateEventIncident);
-router.delete("/:incidentId/events/:eventId", deleteEventFromIncident);
+
+router.post("/", requireAuth, createIncident);
+router.get("/", requireAuth, getIncidents);
+router.get("/:id",requireAuth, getIncidentById);
+router.post("/:id/events",requireAuth, addEventToIncident);
+router.delete("/:id",requireAuth, deleteIncident);
+router.patch("/:incidentId/events/:eventId", requireAuth, updateEventIncident);
+router.delete("/:incidentId/events/:eventId", requireAuth, deleteEventFromIncident);
 module.exports = router;

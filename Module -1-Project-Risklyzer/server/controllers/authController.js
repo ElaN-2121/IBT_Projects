@@ -2,12 +2,17 @@ const User = require("../models/User.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
-
 const register = async (req, res) => {
     try{
         const {username, email, password} = req.body;
         const user = await User.findOne({email});
+
+        const passwordPolicy = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordPolicy.test(password)) {
+        return res.status(400).json({
+            message: "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, and a number."
+        });
+        }
 
         if (user) return res.status(400).json({
             message:"User already exists" 
@@ -80,10 +85,15 @@ const logout = async (req, res) =>{
     }
 }
 
-exports.me = async (req, res) => {
-        const admin = await User.findById(req.userId).select('-passwordHash');
-        if (!admin) return res.status(404).json({ error: 'Not found'});
-        res.json(admin);
+
+const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.userID).select("-passwordHash");
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.status(200).json({ user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-module.exports={ register, login, logout};
+module.exports={ register, login, logout, getMe};
