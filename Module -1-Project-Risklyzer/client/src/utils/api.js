@@ -101,3 +101,33 @@ export async function getVulnerabilityById(id) {
   if (!res.ok) throw new Error("Failed to fetch vulnerability");
   return res.json();
 }
+
+const PHISHING_BASE = "/api/phishing";
+
+export async function getPhishingCases() {
+  const res = await fetch(PHISHING_BASE);
+  if (!res.ok) throw new Error("Failed to fetch phishing cases");
+  return res.json();
+}
+
+export async function getPhishingCaseById(id) {
+  const res = await fetch(`${PHISHING_BASE}/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch phishing case");
+  return res.json();
+}
+
+export async function createPhishingCase(data) {
+  const res = await fetch(PHISHING_BASE, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error("Failed to create phishing case");
+  return res.json();
+}
+
+export async function deletePhishingCase(id) {
+  const res = await fetch(`${PHISHING_BASE}/${id}`, { method: "DELETE" });
+  if (!res.ok) throw new Error("Failed to delete phishing case");
+  return res.json();
+}

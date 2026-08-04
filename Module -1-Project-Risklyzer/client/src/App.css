@@ -488,3 +488,46 @@ body {
 .danger-link:hover {
   color: #ff7373;
 }
+.phishing-textarea {
+  grid-column: 1 / -1;
+  background: var(--bg-ink);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 10px;
+  color: var(--text-active);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.result-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.result-score {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.result-panel.high .result-score { color: #ff4d4d; }
+.result-panel.medium .result-score { color: #e8a33d; }
+.result-panel.low .result-score { color: #4caf50; }
+
+.flag-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-active);
+  font-size: 14px;
+}
+
+.flag-list li {
+  margin-bottom: 4px;
+}
+
+.vuln-table td.high { color: #ff4d4d; font-weight: 600; }
+.vuln-table td.medium { color: #e8a33d; font-weight: 600; }
+.vuln-table td.low { color: #4caf50; font-weight: 600; }

@@ -130,3 +130,31 @@ A separate overview page aggregates event counts per stage across every incident
 - React timeline visualization with inline event editing (re-running the classifier if the description changes) and a `recharts` bar chart for the aggregate dashboard
 
 
+## Feature 3: Phishing Red-Flag Scorer
+
+### Problem
+Phishing remains one of the most common initial-access vectors into an organization, and it succeeds by exploiting predictable human psychology — urgency, authority, and trust — rather than technical flaws. Analysts and end users are trained to look for a specific, learnable set of red flags in a suspicious email rather than relying on gut instinct alone.
+
+### What it does
+Users submit the key components of a suspicious email — sender address, subject, body, and (optionally) a link's displayed text and its actual URL — and the application scores it against a set of red-flag checks, returning a numeric risk score alongside a plain-language explanation of exactly which signals were triggered and why.
+
+### Scoring model
+Rather than calling a third-party spam/phishing API, detection is handled by a self-contained rule engine that checks the submitted content against four categories of red flags, each contributing independently to the final score:
+
+| Check | Points | What it looks for |
+|---|---|---|
+| Urgency/pressure language | +2 | Words like "urgent," "immediately," "suspended," "act now" in the subject or body |
+| Generic greeting | +1 | Impersonal openings like "Dear Customer" instead of a real name |
+| Requests for sensitive info | +3 | Mentions of passwords, SSNs, credit cards, or account verification |
+| URL shortener in link | +2 | Shortened links (bit.ly, tinyurl, etc.), which are commonly used to obscure a malicious destination |
+
+Sensitive-info requests are weighted highest, since a legitimate organization directly asking for a password or SSN in an email is one of the clearest, lowest-ambiguity indicators of phishing.
+
+This is intentionally a transparent, rule-based heuristic rather than a machine-learning classifier — every flag raised is traceable to a specific, explainable check, which matters for a tool meant to help someone learn to spot phishing themselves, not just receive a black-box verdict. Two additional checks were scoped but not built in this pass — cross-referencing a claimed brand against a free-email sending domain, and comparing a link's displayed text against its actual destination — noted here as a natural next step rather than an oversight.
+
+### Tech
+- MongoDB schema storing submitted cases for a running history
+- Scoring logic isolated in its own service module, consistent with the pattern used in Features 1 and 2
+- Express REST API (`/api/phishing`) — create, list, retrieve, delete (no update: a submitted email's content shouldn't change after the fact, since the point is scoring what was actually received, not editing it into a different result)
+- React interface showing an immediate score/flag breakdown on submission, plus a running table of past analyses with risk-tier coloring
+
