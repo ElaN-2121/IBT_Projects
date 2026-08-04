@@ -131,3 +131,13 @@ export async function deletePhishingCase(id) {
   if (!res.ok) throw new Error("Failed to delete phishing case");
   return res.json();
 }
+
+export async function analyzeThreatActor(data) {
+  const res = await fetch("/api/attribution", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error("Failed to analyze threat actor");
+  return res.json();
+}
